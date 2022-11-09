@@ -1,17 +1,16 @@
-import { Entity, PrimaryColumn, Column, OneToOne } from 'typeorm'
+import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm'
 
 import { User } from './User'
 
 @Entity()
 export class Product {
-
-    @PrimaryColumn()
-    id: number
+    @PrimaryColumn('uuid')
+    id: string
     
     @Column({length: 120})
     name: string
     
-    @OneToOne(type => User, product => Product)
+    @ManyToOne(type => User, owner => User)
     owner: string
 
     @Column()

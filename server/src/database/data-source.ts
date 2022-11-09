@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+
 import { Chat } from "../models/Chat"
 import { Product } from "../models/Product"
 import { User } from "../models/User"
@@ -7,22 +8,13 @@ import { User } from "../models/User"
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
-    port: 5432,
+    port: 5436,
     username: "admin",
     password: "admin",
-    database: "agrodigital",
+    database: "agrodigital", // TO CREATE AN DATABASE IN DOCKER
     synchronize: true,
     logging: false,
     entities: [User, Product, Chat],
-    migrations: [],
+    migrations: ['./migration/**/*.ts'],
     subscribers: [],
 })
-
-// to initialize initial connection with the database, register all entities
-// and "synchronize" database schema, call "initialize()" method of a newly created database
-// once in your application bootstrap
-AppDataSource.initialize()
-    .then(() => {
-        // here you can start to work with your database
-    })
-    .catch((error) => console.log(error))
