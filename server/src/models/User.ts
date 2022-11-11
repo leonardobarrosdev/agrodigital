@@ -5,13 +5,13 @@ import {
     OneToMany,
 } from "typeorm"
 
+import { Chat } from "./Chat"
 import { Product } from "./Product"
 
 @Entity()
 export class User {
-
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn('uuid')
+    id: string
 
     @Column({length: 40})
     firstName: string
@@ -22,7 +22,12 @@ export class User {
     @Column({length: 120})
     email: string
 
-    @OneToMany(type => Product, product => Product)
+    @OneToMany(type => Product, product => Product, {
+        cascade: true,
+    })
     @Column()
-    product: string
+    products: Product[]
+
+    @OneToMany(type => Chat, chats => Chat)
+    chats: Chat[]
 }
