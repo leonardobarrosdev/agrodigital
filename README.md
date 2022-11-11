@@ -1,14 +1,47 @@
-# agrodigital
-App de venda para agricultura familiar
+# Agro Digital
+Aplicativo e-commerce voltado para agricultura familiar
+Modelo C to C
 
-Projeto desenvolvido em NodeJS e React no Windows, testado no GNU/Linux e Windows.
+## Funcionalidades
+- Autentficação com Google (Login/Logout)
+- Chat
 
 
-## Dependências
+## Deploy
 
-- [NodeJS](https://nodejs.org/en/) - Versão 16.18.0
-- [TypeORM](https://typeorm.io/) - Versão lts
-- [TypeScript](
+#### server
+```
+npm typeorm migration:run
+npm run dev
+```
+#### web
+```
+npm start
+```
+#### mobile
+```
+npx expo start
+```
 
-## Instalação:
+## Development
+Clone the directory and install dependencies:
+```
+git clone ...
+npm install
+```
+
+Para rodar a aplicação você deve ter o banco de dados rodando.
+```
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+```
+
+Crie server/.env baseado no server/.env.example e edite DATABASE_URL.
+```
+service postgresql start
+```
+
+## Tech stack
+- React, React Native, Expo, Next, Axios e React-dom
+- NodeJS e Typescript
+- Postgres
 
