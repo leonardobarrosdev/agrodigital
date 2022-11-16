@@ -9,12 +9,12 @@ export class Product {
 
     @Column('uuid')
     id: string
+
+    // @TableForeigKey()
+    // userId: User.id
     
     @Column({length: 120})
     name: string
-    
-    @ManyToOne(type => User, owner => User)
-    owner: string
 
     @Column
     typeProduct: string
@@ -25,12 +25,16 @@ export class Product {
     @Column()
     price: string
 
-    @Column("text")
+    @Column('text')
     description: string
 
     @Column()
-    date: Date()
+    date: Date
 
     @Column()
     Addess: string
+
+
+    @ManyToOne(type => User, owner => User)
+    owner: Usser
 }

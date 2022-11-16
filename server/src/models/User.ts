@@ -3,10 +3,10 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
-} from "typeorm"
+} from 'typeorm'
 
-import { Chat } from "./Chat"
-import { Product } from "./Product"
+import { Chat } from './Chat'
+import { Product } from './Product'
 
 @Entity()
 export class User {

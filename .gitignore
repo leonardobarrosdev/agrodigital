@@ -1,30 +1,3 @@
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,windows,node,database
-
-### Database ###
-*.accdb
-*.db
-*.dbf
-*.mdb
-*.pdb
-*.sqlite3
-*.db-shm
-*.db-wal
-
-### Linux ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
-
 ### Node ###
 # Logs
 logs
@@ -165,31 +138,26 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sqlite3
+*.db-shm
+*.db-wal
 
-# Dump file
-*.stackdump
+### Linux ###
+*~
 
-# Folder config file
-[Dd]esktop.ini
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# KDE directory preferences
+.directory
 
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
-# Windows shortcuts
-*.lnk
-
-# Mobile
-
+# .nfs files are created when an open file is removed but is still being accessed

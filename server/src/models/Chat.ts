@@ -16,15 +16,21 @@ export class Chat {
     id: number
 
     @TableForeignKey()
-    idUser: User.id
-    
-    @ManyToMany(type => User, (user) => User.name)
-    @JoinTable()
-    usernames: User[]
+    ownerId: Product.owner.id
 
-    @Column("text")
+    @TableForeignKey()
+    userId: User.id
+
+    @Column('text')
     message: string
 
     @Column()
-    date: Date
+    date: Date.now()
+
+
+    @OneToOne(type => User, (owner) => Product.owner)
+    owner: owner
+    
+    @OneToOne(type => User, (client) => User)
+    client: client
 }

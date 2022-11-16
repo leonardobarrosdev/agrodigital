@@ -10,14 +10,21 @@ import {
 
 @Entity()
 export class Sale {
-    @PrimaryGeneratorColumn()
-    id: int
+    // @PrimaryGeneratorColumn()
+    // id: int
 
     @TableForeigKey()
+    productCode: Product.code
 
-    @Column()
-    date: Date()
+    @TableForeigKey()
+    ownerId: Product.owner.id
+
+    @TableForeigKey()
+    userId: User.id
 
     @column()
     salesNumber: int
+
+    @Column()
+    date: Date
 }

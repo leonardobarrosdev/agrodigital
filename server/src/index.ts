@@ -1,5 +1,12 @@
 import express from 'express';
 
+const app = express();
+const port = 3001;
+
+app.listen(port, () => {
+    console.log('I am to here on mode turbe')
+});
+
 // import { AppDataSource } from "./database/data-source"
 // import { User } from "./models/User"
 
