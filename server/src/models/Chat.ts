@@ -12,9 +12,12 @@ import { User } from './User'
 
 @Entity()
 export class Chat {
-    @PrimaryColumn('uuid')
+    @PrimaryGeneratedColumn('uuid')
     id: number
 
+    @TableForeignKey()
+    idUser: User.id
+    
     @ManyToMany(type => User, (user) => User.name)
     @JoinTable()
     usernames: User[]

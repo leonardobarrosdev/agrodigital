@@ -4,7 +4,10 @@ import { User } from './User'
 
 @Entity()
 export class Product {
-    @PrimaryColumn('uuid')
+    @PrimaryGeneratedColumn('cuid')
+    code: string
+
+    @Column('uuid')
     id: string
     
     @Column({length: 120})
@@ -12,6 +15,9 @@ export class Product {
     
     @ManyToOne(type => User, owner => User)
     owner: string
+
+    @Column
+    typeProduct: string
 
     @Column()
     photo: string
@@ -21,4 +27,10 @@ export class Product {
 
     @Column("text")
     description: string
+
+    @Column()
+    date: Date()
+
+    @Column()
+    Addess: string
 }

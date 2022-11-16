@@ -11,10 +11,10 @@ export const AppDataSource = new DataSource({
     port: 5436,
     username: "admin",
     password: "admin",
-    database: "agrodigital", // TO CREATE AN DATABASE IN DOCKER
+    database: "agrodigital",
     synchronize: true,
     logging: false,
     entities: [User, Product, Chat],
-    migrations: ['./migration/**/*.ts'],
-    subscribers: [],
+    migrations: [__dirname + '/migration/**/*.ts'],
+    subscribers: true,
 })
