@@ -12,7 +12,7 @@ import { User } from './User'
 
 @Entity()
 export class Chat {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     id: number
 
     @TableForeignKey()
@@ -27,10 +27,9 @@ export class Chat {
     @Column()
     date: Date.now()
 
-
-    @OneToOne(type => User, (owner) => Product.owner)
-    owner: owner
+    @OneToOne(type => User, (user) => Product.owner)
+    owner: User
     
-    @OneToOne(type => User, (client) => User)
-    client: client
+    @OneToOne(type => User, (user) => User)
+    client: User
 }

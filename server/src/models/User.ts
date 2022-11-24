@@ -10,7 +10,7 @@ import { Product } from './Product'
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn()
     id: string
 
     @Column({length: 40})
@@ -21,6 +21,10 @@ export class User {
 
     @Column({length: 120})
     email: string
+
+    @Column()
+    password: string
+
 
     @OneToMany(type => Product, product => Product, {
         cascade: true,

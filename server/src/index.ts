@@ -1,30 +1,29 @@
 import express from 'express';
+import cors from 'cors';
+import client from './database/data-source';
+
+import {
+    chats,
+    products,
+    Sale,
+    User
+} from './models';
 
 const app = express();
 const port = 3001;
 
+app.get('/', (req, res) => {
+    console.log(`Initial page: ${port}`)
+});
+
+app.post('/login', async (req, res) => {
+    try {
+        const body = req.body()
+    } catch(err) {
+        console.error(err.message)
+    }
+})
+
 app.listen(port, () => {
     console.log('I am to here on mode turbe')
 });
-
-// import { AppDataSource } from "./database/data-source"
-// import { User } from "./models/User"
-
-// AppDataSource.initialize().then(async () => {
-//     const user = new User()
-    
-//     user.firstName = "Timber"
-//     user.lastName = "Saw"
-//     user.email = "demo@company.com"
-    
-//     await AppDataSource.manager.save(user)
-    
-//     console.log("Saved a new user with id: " + user.id)
-//     console.log("Loading users from the database...")
-    
-//     const users = await AppDataSource.manager.find(User)
-    
-//     console.log("Loaded users: ", users)
-//     console.log("Here you can setup and run express / fastify / any other framework.")
-
-// }).catch(error => console.log(error))
