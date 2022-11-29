@@ -5,8 +5,8 @@ import {
     OneToMany,
 } from 'typeorm'
 
-import { Chat } from './Chat'
-import { Product } from './Product'
+// import { Chat } from './Chat'
+// import { Product } from './Product'
 
 @Entity()
 export class User {
@@ -25,13 +25,32 @@ export class User {
     @Column()
     password: string
 
-
-    @OneToMany(type => Product, product => Product, {
-        cascade: true,
-    })
     @Column()
-    products: Product[]
+    created_at: Date;
 
-    @OneToMany(type => Chat, chats => Chat)
-    chats: Chat[]
+    @Column()
+    updated_at: Date;
+
+    // @OneToMany(type => Product, products => Product, {
+    //     cascade: true,
+    // })
+    // @Column()
+    // products: Product[]
+
+    // @OneToMany(type => Chat, chats => Chat)
+    // chats: Chat[]
+
+    constructor(
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.created_at = new Date();
+        this.updated_at = new Date();
+    }
 }

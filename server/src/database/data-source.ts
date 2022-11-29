@@ -1,12 +1,11 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 
-import { Chat } from "../models/Chat"
 import { Product } from "../models/Product"
 import { User } from "../models/User"
 
 
-export const AppDataSource = new DataSource({
+const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5432,
@@ -15,10 +14,12 @@ export const AppDataSource = new DataSource({
     database: "agrodigital",
     synchronize: true,
     logging: false,
-    entities: [User, Product, Chat],
-    migrations: [__dirname + '/migration/**/*.ts'],
-    subscribers: true,
-})
+    entities: [User, Product],
+    migrations: [__dirname + '/migrations/**/*.ts'],
+    // subscribers: true,
+});
+
+export default AppDataSource;
 
 // client.connect()
 //   .then(() => console.log('Connected sucessfuly'))

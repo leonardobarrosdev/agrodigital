@@ -1,4 +1,9 @@
-import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne
+} from 'typeorm'
 
 import { User } from './User'
 
@@ -6,17 +11,11 @@ import { User } from './User'
 export class Product {
     @PrimaryGeneratedColumn()
     code: string
-
-    @Column('uuid')
-    id: string
-
-    // @TableForeigKey()
-    // userId: User.id
     
     @Column({length: 120})
     name: string
 
-    @Column
+    @Column()
     typeProduct: string
 
     @Column()
@@ -34,7 +33,6 @@ export class Product {
     @Column()
     Addess: string
 
-
-    @ManyToOne(type => User, owner => User)
-    owner: Usser
+    // @ManyToOne(type => User, owner => User)
+    // owner: User
 }
