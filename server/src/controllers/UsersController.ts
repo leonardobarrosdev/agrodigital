@@ -9,7 +9,12 @@ interface IRequest {
 }
 
 class UsersController {
-	constructor(private userRepository: UserRepository) {}
+	private userRepository;
+
+	constructor(userRepository: UserRepository) {
+		this.userRepository = UserRepository;
+	}
+	// constructor(private userRepository: UserRepository) {}
 
 	execute({ fullName, email, password }: IRequest): User {
 		const userExist = this.userRepository.findByEmail(email);

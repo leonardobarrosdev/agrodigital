@@ -19,6 +19,7 @@ class UserRepository {
 		let lastName = fullName.split(' ')
 			.slice(1).toString().replace(',', ' ');
 
+		console.log(`Full name is ${firstName} ${lastName}`);
 		const user = new User(firstName, lastName, email, password);
 
 		this.users.push(user);
@@ -34,7 +35,7 @@ class UserRepository {
 		const user = this.users.find(
 			user => user.email === email
 		);
-
+		console.log(user);
 		return user;
 	}
 }

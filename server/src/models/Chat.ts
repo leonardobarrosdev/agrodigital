@@ -25,7 +25,7 @@ export class Chat {
     message: string
 
     @Column()
-    date: Date.now()
+    date: Date
 
     @OneToOne(type => User, (user) => Product.owner)
     owner: User

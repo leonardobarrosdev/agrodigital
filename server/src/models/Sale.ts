@@ -23,7 +23,7 @@ export class Sale {
     userId: User.id
 
     @column()
-    salesNumber: int
+    salesNumber: integer
 
     @Column()
     date: Date
