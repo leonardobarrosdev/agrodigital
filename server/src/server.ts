@@ -2,14 +2,14 @@ import 'express-async-errors';
 import express from 'express';
 
 import routes from './routes';
-import { userMiddleware } from './middlewares/userMiddleware';
+import { middleware } from './middlewares/middleware';
 
 const app = express();
 
 app.use(express.json());
+app.use(middleware);
 app.use(routes);
-app.use(userMiddleware);
 
-app.listen(3001, () => {
-    console.log('I am to here on mode turbe')
+app.listen(3002, () => {
+    console.log('Server actived!')
 });

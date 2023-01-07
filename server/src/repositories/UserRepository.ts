@@ -1,43 +1,81 @@
 import { User } from '../models/User';
+import AppDataSource from '../database/data-source';
 
 interface IUser {
-	fullName: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
+	updated_at?: Date;
 }
 
-class UserRepository {
-	private users;
-	// private users = User[];
+export default class UserRepository {
+	// private AppDataSource = getDataSource();
+	// private manager = this.AppDataSource.getRepository(User);
+	private manager = AppDataSource.manager;
 
-	constructor() {
-		this.users = [];
-	}
+	constructor() {}
 
-	create({ fullName, email, password }: IUser): User {
-		let firstName = fullName.split(' ')[0];
-		let lastName = fullName.split(' ')
-			.slice(1).toString().replace(',', ' ');
+	async create({
+		firstName, lastName, email, password
+	}: IUser): Promise<User> {
+		const user = new User();
 
-		console.log(`Full name is ${firstName} ${lastName}`);
-		const user = new User(firstName, lastName, email, password);
+		user.firstName = firstName;
+		user.lastName = lastName;
+		user.email = email;
+		user.password = password;
 
-		this.users.push(user);
+		await this.manager.save(user);
 
-		return this.users;
-	}
-
-	getUsers(): User[] {
-		return this.users;
-	}
-
-	findByEmail(email: string) {
-		const user = this.users.find(
-			user => user.email === email
-		);
-		console.log(user);
 		return user;
 	}
-}
 
-export default UserRepository;
+	async getUsers(): Promise<User[]> {
+		const users = await this.manager.find(User);
+		
+		return users;
+	}
+
+	async findByEmail(email: string): Promise<User> {
+		const user = await this.manager.findOne(User, {
+			where: { email }
+		});
+
+		return user;
+	}
+
+	async findById(id: string): Promise<User> {
+		const user = await this.manager.findOneBy(User, {
+			id: id
+		});
+
+		return user;
+	}
+
+	async update(id: string, user: IUser): Promise<User> {
+		const usr = await this.findById(id);
+
+		for(let attribute in user) {
+			if(usr[`${attribute}`] !== attribute) {
+				usr[`${attribute}`] = attribute;
+			}
+		}
+
+		usr.updated_at = new Date();
+
+		this.manager.save(usr);
+
+		return usr;
+	}
+
+	async delete(id: string): Promise<boolean> {
+		const user = await this.findById(id);
+
+		if(!user) return false;
+
+		this.manager.remove(User);
+
+		return (await this.findById(id))? true : false;
+	}
+}

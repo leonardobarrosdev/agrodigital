@@ -1,8 +1,10 @@
-import "reflect-metadata"
-import { DataSource } from "typeorm"
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 
-import { Product } from "../models/Product"
-import { User } from "../models/User"
+import { User } from "../models/User";
+import { Product } from "../models/Product";
+import { Sale } from '../models/Sale';
+import { Chat } from '../models/Chat';
 
 
 const AppDataSource = new DataSource({
@@ -13,29 +15,13 @@ const AppDataSource = new DataSource({
     password: "password",
     database: "agrodigital",
     synchronize: true,
-    logging: false,
-    entities: [User, Product],
-    migrations: [__dirname + '/migrations/**/*.ts'],
+    logging: true,
+    // entities: [User, Product, Sale, Chat],
+    entities: [
+        __dirname + '/../models/*.ts'
+    ],
+    migrations: [] //[__dirname + '/migrations/**/*.{js,ts}'],
     // subscribers: true,
 });
 
 export default AppDataSource;
-
-// client.connect()
-//   .then(() => console.log('Connected sucessfuly'))
-//   .catch(err => console.log)
-//   .finally(() => client.end())
-
-
-
-// import { Client } from 'pg';
-
-// const client = new Client({
-//     user: 'postgres',
-//     password: 'password',
-//     host: 'localhost',
-//     port: 5432,
-//     database: 'agrodigital'
-// })
-
-// export default client;

@@ -3,29 +3,39 @@ import UserRepository from '../repositories/UserRepository';
 import { ForbidenError } from '../utils/AppError';
 
 interface IRequest {
-	fullName: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
+	// updated_at?: Date;
 }
 
 class UsersController {
-	private userRepository;
+	constructor(private userRepository: UserRepository) {}
 
-	constructor(userRepository: UserRepository) {
-		this.userRepository = UserRepository;
-	}
-	// constructor(private userRepository: UserRepository) {}
+	async create({ firstName, lastName, email, password }: IRequest): Promise<User> {
+		// const userExist = await this.userRepository.findByEmail(email);
 
-	execute({ fullName, email, password }: IRequest): User {
-		const userExist = this.userRepository.findByEmail(email);
+		// if(userExist) {
+		// 	throw new ForbidenError('Usuário já existe.');
+		// }
 
-		if(userExist) {
-			throw new ForbidenError('User already created.');
-		}
-
-		const user = this.userRepository.create({ fullName, email, password });
+		// let updated_at = Date();
+		const user = await this.userRepository.create({
+			firstName, lastName, email, password
+		});
 
 		return user;
+	}
+
+	async update(id: string, user: IRequest): Promise<User> {
+		if(!await this.userRepository.findById(id)) {
+			throw new ForbidenError('User not exist.');
+		}
+
+		const usr = await this.userRepository.update(id, user);
+
+		return usr;
 	}
 }
 

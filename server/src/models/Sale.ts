@@ -1,30 +1,26 @@
 import {
     Column,
     Entity,
-    JoinTable,
-    ManyToMany,
-    ManyToOne,
     PrimaryColumn,
-    TableForeignKey,
-} from 'typeorm'
+    OneToOne,
+    JoinColumn
+} from 'typeorm';
+
+import { User } from './User';
+import { Product } from './Product';
+import { Message } from './Message';
 
 @Entity()
-export class Sale {
-    // @PrimaryGeneratorColumn()
-    // id: int
-
-    @TableForeigKey()
-    productCode: Product.code
-
-    @TableForeigKey()
-    ownerId: Product.owner.id
-
-    @TableForeigKey()
-    userId: User.id
-
-    @column()
-    salesNumber: integer
-
+export class Sale extends Message {
     @Column()
-    date: Date
+    salesNumber: number
+
+    @OneToOne(() => User)
+    owner: User
+
+    @OneToOne(() => Product, (Product) => Product.code, {
+        onDelete: 'CASCADE'
+    })
+    @JoinColumn()
+    product: Product
 }

@@ -1,35 +1,24 @@
 import {
-    Column,
     Entity,
-    JoinTable,
-    ManyToMany,
-    ManyToOne,
-    PrimaryColumn,
-    TableForeignKey,
-} from 'typeorm'
+    OneToOne,
+    JoinColumn
+} from 'typeorm';
 
-import { User } from './User'
+import { User } from './User';
+import { Product } from './Product';
+import { Message } from './Message';
 
 @Entity()
-export class Chat {
-    @PrimaryGeneratedColumn()
-    id: number
-
-    @TableForeignKey()
-    ownerId: Product.owner.id
-
-    @TableForeignKey()
-    userId: User.id
-
-    @Column('text')
-    message: string
-
-    @Column()
-    date: Date
-
-    @OneToOne(type => User, (user) => Product.owner)
+export class Chat extends Message {
+    @OneToOne((type) => User, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
     owner: User
     
-    @OneToOne(type => User, (user) => User)
+    @OneToOne(() => User, (User) => User, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
     client: User
 }

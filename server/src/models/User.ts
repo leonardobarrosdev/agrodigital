@@ -1,56 +1,58 @@
 import {
     Entity,
+    BaseEntity,
     PrimaryGeneratedColumn,
     Column,
+    CreateDateColumn,
+    UpdateDateColumn,
     OneToMany,
-} from 'typeorm'
+} from 'typeorm';
 
-// import { Chat } from './Chat'
-// import { Product } from './Product'
+import { Product } from './Product';
+import { Chat } from './Chat';
 
-@Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-    id: string
+@Entity('Users')
+export class User extends BaseEntity {
+    @PrimaryGeneratedColumn('uuid')
+    id?: string
 
-    @Column({length: 40})
+    @Column({ type: 'varchar', length: 40 })
     firstName: string
 
-    @Column({length: 100})
+    @Column({ type: 'varchar', length: 100 })
     lastName: string
 
-    @Column({length: 120})
+    @Column({ type: 'varchar', length: 120})
     email: string
 
-    @Column()
+    @Column({ type: 'varchar', length: 16 })
     password: string
 
-    @Column()
-    created_at: Date;
+    @CreateDateColumn({default: new Date()})
+    created_at?: Date
 
-    @Column()
-    updated_at: Date;
+    @CreateDateColumn({default: new Date()})
+    updated_at?: Date
 
-    // @OneToMany(type => Product, products => Product, {
-    //     cascade: true,
-    // })
-    // @Column()
-    // products: Product[]
+    @OneToMany(() => Product, (Product) => Product.code, {
+        onDelete: 'CASCADE'
+    })
+    products: Product[]
 
-    // @OneToMany(type => Chat, chats => Chat)
-    // chats: Chat[]
+    @OneToMany(() => Chat, (Chat) => Chat.id)
+    chats: Chat[]
 
-    constructor(
-        firstName: string,
-        lastName: string,
-        email: string,
-        password: string
-    ) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.created_at = new Date();
-        this.updated_at = new Date();
-    }
+    // constructor(
+    //     firstName: string,
+    //     lastName: string,
+    //     email: string,
+    //     password: string,
+    // ) {
+    //     this.firstName = firstName;
+    //     this.lastName = lastName;
+    //     this.email = email;
+    //     this.password = password;
+    //     this.created_at = new Date();
+    //     this.updated_at = new Date();
+    // }
 }
