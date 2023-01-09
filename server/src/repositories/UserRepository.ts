@@ -1,16 +1,17 @@
 import { User } from '../models/User';
-import AppDataSource from '../database/data-source';
+import AppDataSource from '../database';
 
 interface IUser {
+	id?: string;
 	firstName: string;
 	lastName: string;
 	email: string;
 	password: string;
 	updated_at?: Date;
+	created_at?: Date;
 }
 
 export default class UserRepository {
-	// private AppDataSource = getDataSource();
 	// private manager = this.AppDataSource.getRepository(User);
 	private manager = AppDataSource.manager;
 
@@ -25,6 +26,8 @@ export default class UserRepository {
 		user.lastName = lastName;
 		user.email = email;
 		user.password = password;
+		// updated_at = new Date();
+		// created_at = new Date();
 
 		await this.manager.save(user);
 

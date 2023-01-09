@@ -29,7 +29,7 @@ productRouters.get('/:name', async (req, res) => {
 	return res.json(products);
 });
 
-productRouters.get('/cadastrar', async (req, res) => {
+productRouters.post('/cadastrar', async (req, res) => {
 	const product = await productController.create(
 		req.body
 	);

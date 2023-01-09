@@ -1,5 +1,5 @@
 import { Sale } from '../models/Sale';
-import AppDataSource from '../database/data-source'
+import AppDataSource from '../database'
 
 interface ISale {
 	id?: string;

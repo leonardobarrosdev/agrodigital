@@ -6,7 +6,10 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     OneToMany,
+    BeforeInsert
 } from 'typeorm';
+import { IsEmail } from 'class-validator';
+import * as bcrypt from 'bcrypt';
 
 import { Product } from './Product';
 import { Chat } from './Chat';
@@ -22,10 +25,11 @@ export class User extends BaseEntity {
     @Column({ type: 'varchar', length: 100 })
     lastName: string
 
-    @Column({ type: 'varchar', length: 120})
+    @Column({ type: 'varchar', length: 220})
+    @IsEmail()
     email: string
 
-    @Column({ type: 'varchar', length: 16 })
+    @Column({ type: 'varchar'})
     password: string
 
     @CreateDateColumn({default: new Date()})
@@ -34,13 +38,18 @@ export class User extends BaseEntity {
     @CreateDateColumn({default: new Date()})
     updated_at?: Date
 
-    @OneToMany(() => Product, (Product) => Product.code, {
-        onDelete: 'CASCADE'
-    })
-    products: Product[]
+    // @OneToMany(() => Product, (Product) => Product.code, {
+    //     onDelete: 'CASCADE'
+    // })
+    // products: Product[]
 
-    @OneToMany(() => Chat, (Chat) => Chat.id)
-    chats: Chat[]
+    // @OneToMany(() => Chat, (Chat) => Chat.id)
+    // chats: Chat[]
+
+    @BeforeInsert()
+    encryptPassword() {
+        this.password = bcrypt.hashSync(this.password, 10);
+    }
 
     // constructor(
     //     firstName: string,
