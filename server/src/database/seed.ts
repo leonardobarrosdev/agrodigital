@@ -1,10 +1,11 @@
 import { User } from "../models/User"
+import { AppDataSource } from './data-source';
 
 AppDataSource.initialize().then(async () => {
     const user = new User()
     
-    user.firstName = "Timber"
-    user.lastName = "Saw"
+    user.firstName = "Leonardo"
+    user.lastName = "Barros"
     user.email = "demo@company.com"
     user.password = 'password'
     
