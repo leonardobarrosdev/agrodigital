@@ -14,54 +14,38 @@ import * as bcrypt from 'bcrypt';
 import { Product } from './Product';
 import { Chat } from './Chat';
 
-@Entity('Users')
+@Entity('users')
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id?: string
 
-    @Column({ type: 'varchar', length: 40 })
+    @Column({ type: 'varchar' })
     firstName: string
 
-    @Column({ type: 'varchar', length: 100 })
+    @Column({ type: 'varchar' })
     lastName: string
 
-    @Column({ type: 'varchar', length: 220})
+    @Column({ type: 'varchar' })
     @IsEmail()
     email: string
 
-    @Column({ type: 'varchar'})
+    @Column({ type: 'varchar' })
     password: string
 
-    @CreateDateColumn({default: new Date()})
+    @CreateDateColumn({ default: new Date() })
     created_at?: Date
 
-    @CreateDateColumn({default: new Date()})
+    @CreateDateColumn({ default: new Date() })
     updated_at?: Date
 
-    // @OneToMany(() => Product, (Product) => Product.code, {
-    //     onDelete: 'CASCADE'
-    // })
-    // products: Product[]
+    @OneToMany(() => Product, (Product) => Product.code)
+    products: Product[]
 
-    // @OneToMany(() => Chat, (Chat) => Chat.id)
-    // chats: Chat[]
+    @OneToMany(() => Chat, (Chat) => Chat.id)
+    chats: Chat[]
 
     @BeforeInsert()
     encryptPassword() {
         this.password = bcrypt.hashSync(this.password, 10);
     }
-
-    // constructor(
-    //     firstName: string,
-    //     lastName: string,
-    //     email: string,
-    //     password: string,
-    // ) {
-    //     this.firstName = firstName;
-    //     this.lastName = lastName;
-    //     this.email = email;
-    //     this.password = password;
-    //     this.created_at = new Date();
-    //     this.updated_at = new Date();
-    // }
 }

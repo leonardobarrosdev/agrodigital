@@ -37,7 +37,7 @@ productRouters.post('/cadastrar', async (req, res) => {
 	return res.json(product);
 })
 
-productRouters.patch('/:id', async (req, res) => {
+productRouters.patch('/editar/:id', async (req, res) => {
 	const product = await productController.update(
 		req.params.id, req.body
 	);
@@ -45,12 +45,12 @@ productRouters.patch('/:id', async (req, res) => {
 	return res.json(product);
 });
 
-productRouters.delete('/:id', async (req, res) => {
+productRouters.delete('/excluir/:id', async (req, res) => {
 	const result = await productController.delete(
 		req.params.id
 	);
 
-	return res.json(result);
+	return (result)? res.json('Ok') : res.json('Não foi possível excluir');
 });
 
 export default productRouters;

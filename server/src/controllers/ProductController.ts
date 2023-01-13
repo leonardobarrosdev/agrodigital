@@ -3,7 +3,6 @@ import ProductRepository from '../repositories/ProductRepository';
 import { NotFoundError, AppError } from '../utils/AppError';
 
 interface IProduct {
-	id?: string;
 	code?: string;
 	name: string;
 	typeProduct: string;
@@ -12,26 +11,20 @@ interface IProduct {
 	description: string;
 	address: string;
 	updated_at?: Date;
+	owner?: string;
+	sales?: string;
+	chat?: string;
+	chats?: string[];
 }
 
 export default class ProductController {
 	constructor(private productRepository: ProductRepository) {}
 
-	async create({
-		name, typeProduct, photo, price, description, address
-	}: IProduct): Promise<Product> {
-		const product = await this.productRepository.create({
-			name, typeProduct, photo, price, description, address
-		});
-
-		return product;
-	}
-
 	async getProducts(): Promise<Product[]> {
 		const products = await this.productRepository.getAll();
 
 		if(!products || products.length === 0) {
-			throw new NotFoundError('Produto não encontrado.');
+			throw new NotFoundError('Não há produtos.');
 		}
 
 		return products;
@@ -57,6 +50,12 @@ export default class ProductController {
 		return products;
 	}
 
+	async create(product: IProduct): Promise<Product> {
+		const prod = await this.productRepository.create(product);
+
+		return prod;
+	}
+	
 	async update(code: string, product: IProduct): Promise<Product> {
 		if(!await this.productRepository.findById(code)) {
 			throw new NotFoundError('Produto não existe.');

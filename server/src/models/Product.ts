@@ -4,6 +4,7 @@ import {
     PrimaryGeneratedColumn,
     OneToOne,
     OneToMany,
+    ManyToOne,
     JoinColumn
 } from 'typeorm';
 
@@ -16,7 +17,7 @@ export class Product {
     @PrimaryGeneratedColumn()
     code: string
     
-    @Column({length: 120})
+    @Column({ length: 120 })
     name: string
 
     @Column()
@@ -34,42 +35,33 @@ export class Product {
     @Column()
     address: string
 
-    @Column()
+    @Column({ default: new Date() })
     created_at: Date
 
-    @Column()
+    @Column({ default: new Date() })
     updated_at: Date
 
-    @OneToOne(() => User, (User) => User.id, {
+    @ManyToOne(() => User, (User) => User.id, {
         onDelete: 'CASCADE'
     })
     @JoinColumn()
     owner: User
 
-    @OneToOne(() => Sale, (Sale) => Sale.product)
-    sales: Sale
+    @OneToOne(() => Sale, (Sale) => Sale.product, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
+    sales?: Sale
 
-    @OneToOne(() => Chat, (Chat) => Chat.owner)
-    chat: Chat
+    @OneToOne(() => Chat, (Chat) => Chat.owner, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
+    chat?: Chat
 
-    @OneToMany(() => Chat, (Chat) => Chat.client)
-    chats: Chat[]
-
-    constructor(
-        name: string,
-        typeProduct: string,
-        photo: string,
-        price: number,
-        description: string,
-        address: string,
-    ) {
-        this.name = name;
-        this.typeProduct = typeProduct;
-        this.photo = photo;
-        this.price = price;
-        this.description = description;
-        this.address = address;
-        this.created_at = new Date();
-        this.updated_at = new Date();
-    }
+    @OneToMany(() => Chat, (Chat) => Chat.client, {
+        onDelete: 'SET NULL'
+    })
+    @JoinColumn()
+    chats?: Chat[]
 }

@@ -2,7 +2,6 @@ import { Product } from '../models/Product'
 import AppDataSource from '../database'
 
 interface IProduct {
-	id?: string;
 	code?: string;
 	name: string;
 	typeProduct: string;
@@ -11,24 +10,16 @@ interface IProduct {
 	description: string;
 	address: string;
 	updated_at?: Date;
+	owner?: string;
+	sales?: string;
+	chat?: string;
+	chats?: string[];
 }
 
 export default class ProductRepository {
 	private manager = AppDataSource.manager;
 
 	constructor() {}
-
-	async create({
-		name, typeProduct, photo, price, description, address
-	}: IProduct): Promise<Product> {
-		const product = new Product(
-			name, typeProduct, photo, price, description, address
-		);
-
-		await this.manager.save(product);
-
-		return product;
-	}
 
 	async getAll(): Promise<Product[]> {
 		const product = await this.manager.find(Product);
@@ -40,6 +31,7 @@ export default class ProductRepository {
 		const product = await this.manager.findOneBy(Product, {
 			code: id
 		});
+		console.log(product);
 
 		return product;
 	}
@@ -54,29 +46,43 @@ export default class ProductRepository {
 		return product;
 	}
 
-	async update(code: string, product: IProduct): Promise<Product> {
-		const prod = await this.findById(code);
+	async create(product: IProduct): Promise<Product> {
+		const newProduct = new Product();
 
-		for(let attribute in product) {
-			if(prod[`${attribute}`] !== attribute) {
-				prod[`${attribute}`] = attribute;
+		for(const key in product) {
+			newProduct[`${key}`] = product[`${key}`];
+		}
+
+		await this.manager.save(newProduct);
+
+		return newProduct;
+	}
+
+	async update(id: string, product: IProduct): Promise<Product> {
+		const prod = await this.findById(id);
+
+		for(let key in product) {
+			if(prod[`${key}`] !== product[`${key}`]) {
+				prod[`${key}`] = product[`${key}`];
 			}
 		}
 
 		prod.updated_at = new Date();
 
-		await this.manager.save(product);
+		await this.manager.save(prod);
 
 		return prod;
 	}
 
 	async delete(id: string): Promise<boolean> {
 		const product = await this.findById(id);
-
-		if(!product) return false;
+		
+		if(product === null) return false;
 
 		await this.manager.remove(product);
 
-		return (await this.findById(id))? true : false;
+		// result = (await this.findById(id))? true : false;
+
+		return true;
 	}
 }

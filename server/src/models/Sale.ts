@@ -6,17 +6,13 @@ import {
     JoinColumn
 } from 'typeorm';
 
-import { User } from './User';
 import { Product } from './Product';
 import { Message } from './Message';
 
 @Entity()
 export class Sale extends Message {
     @Column()
-    salesNumber: number
-
-    @OneToOne(() => User)
-    owner: User
+    salesNumber?: number
 
     @OneToOne(() => Product, (Product) => Product.code, {
         onDelete: 'CASCADE'

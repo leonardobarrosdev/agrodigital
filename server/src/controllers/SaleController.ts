@@ -3,55 +3,55 @@ import SaleRepository from '../repositories/SaleRepository';
 import { NotFoundError } from '../utils/AppError';
 
 interface ISale {
-	id?: string;
 	title: string;
 	message: string;
-	salesNumber?: string;
-	created_at?: string;
-	updated_at?: string;
+	salesNumber?: number;
+	updated_at?: Date;
 }
 
 export default class SaleController {
 	constructor(private saleRepository: SaleRepository) {}
 
-	async create({
-		title, message
-	}: ISale): Promise<Sale> {
-		const sale = await this.saleRepository.create({
-			title, message
-		});
-
-		if(sale) throw new NotFoundError('Venda já existe (Título).');
-
-		return sale;
-	}
-
 	async getAll(): Promise<Sale[]> {
 		const sales = await this.saleRepository.getAll();
 
 		if(!sales) {
-			throw new NotFoundError('Vendas ñão registradas.')
+			throw new NotFoundError('Vendas ñão registradas.');
 		}
 
 		return sales;
 	}
 
 	async getById(id: string): Promise<Sale> {
-		const sale = await this.saleRepository.findById(id);
+		const sale = await this.saleRepository.getById(id);
 
 		if(!sale) throw new NotFoundError('Venda não encontrada.');
 
 		return sale;
 	}
 
-	async update(id: string, {
-		title, message
-	}: ISale): Promise<Sale> {
-		const sl = this.saleRepository.findById(id);
+	async getByTitle(title: string): Promise<Sale[]> {
+		const sale = await this.saleRepository.getByTitle(title);
 
-		if(!sl) throw new NotFoundError('Venda não encontrada.');
+		if(!sale) {
+			throw new NotFoundError('Vanda com este título não encontrada');
+		}
 
-		return await this.saleRepository.update(id, {title, message});
+		return sale;
+	}
+
+	async create(content: ISale): Promise<Sale> {
+		const sale = await this.saleRepository.create(content);
+
+		return sale;
+	}
+
+	async update(id: string, content?: ISale): Promise<Sale> {
+		const sale = this.saleRepository.getById(id);
+
+		if(!sale) throw new NotFoundError('Venda não encontrada.');
+
+		return await this.saleRepository.update(id, content);
 	}
 
 	async delete(id: string): Promise<boolean> {

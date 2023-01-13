@@ -10,13 +10,13 @@ import { Message } from './Message';
 
 @Entity()
 export class Chat extends Message {
-    @OneToOne((type) => User, {
+    @OneToOne(() => Product, (Product) => Product.owner, {
         onDelete: 'SET NULL'
     })
     @JoinColumn()
     owner: User
     
-    @OneToOne(() => User, (User) => User, {
+    @OneToOne(() => User, {
         onDelete: 'SET NULL'
     })
     @JoinColumn()

@@ -7,7 +7,7 @@ import {
 @Entity()
 export abstract class Message {
 	@PrimaryGeneratedColumn()
-  id: string
+	id: string
 
 	@Column({ length: 120 })
 	title: string
@@ -15,9 +15,9 @@ export abstract class Message {
 	@Column('text')
 	message: string
 
-	@Column()
-  created_at: Date
+	@Column({ default: new Date() })
+	created_at: Date
 
-  @Column()
-  updated_at: Date
+	@Column({ default: new Date() })
+	updated_at: Date
 }

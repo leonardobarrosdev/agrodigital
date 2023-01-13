@@ -8,31 +8,12 @@ interface IUser {
 	email: string;
 	password: string;
 	updated_at?: Date;
-	created_at?: Date;
 }
 
 export default class UserRepository {
-	// private manager = this.AppDataSource.getRepository(User);
 	private manager = AppDataSource.manager;
 
 	constructor() {}
-
-	async create({
-		firstName, lastName, email, password
-	}: IUser): Promise<User> {
-		const user = new User();
-
-		user.firstName = firstName;
-		user.lastName = lastName;
-		user.email = email;
-		user.password = password;
-		// updated_at = new Date();
-		// created_at = new Date();
-
-		await this.manager.save(user);
-
-		return user;
-	}
 
 	async getUsers(): Promise<User[]> {
 		const users = await this.manager.find(User);
@@ -56,12 +37,24 @@ export default class UserRepository {
 		return user;
 	}
 
-	async update(id: string, user: IUser): Promise<User> {
+	async create(user: IUser): Promise<User> {
+		const usr = new User();
+
+		for(const key in user) {
+			usr[`${key}`] = user[`${key}`]
+		}
+
+		await this.manager.save(usr);
+
+		return usr;
+	}
+
+	async update(id: string, user?: IUser): Promise<User> {
 		const usr = await this.findById(id);
 
-		for(let attribute in user) {
-			if(usr[`${attribute}`] !== attribute) {
-				usr[`${attribute}`] = attribute;
+		for(let key in user) {
+			if(usr[`${key}`] !== user[`${key}`]) {
+				usr[`${key}`] = user[`${key}`];
 			}
 		}
 
@@ -74,11 +67,14 @@ export default class UserRepository {
 
 	async delete(id: string): Promise<boolean> {
 		const user = await this.findById(id);
+		let result = !user;
 
-		if(!user) return false;
+		if(result) return false;
 
 		this.manager.remove(User);
 
-		return (await this.findById(id))? true : false;
+		result = (await this.findById(id))? true : false;
+
+		return result;
 	}
 }
