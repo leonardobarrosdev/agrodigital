@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: 'agrodigital-db'
+    env_file: .env
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=$USER_NAME
+      - POSTGRES_PASSWORD=$PASSWORD
+      - POSTGRES_DB=$DATABASE
+    ports:
+      - 5432:5432
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 981db5fcc5f7/api-agrodigital:latest
+    container_name: 'agrodigital-api'
+    restart: always
+    env_file: .env
+    environment:
+      - POSTGRES_USER=$USER_NAME
+      - POSTGRES_PASSWORD=$PASSWORD
+      - POSTGRES_HOST=$HOST
+      - POSTGRES_PORT=$PORT_DB
+      - POSTGRES_DB=$DATABASE
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      
