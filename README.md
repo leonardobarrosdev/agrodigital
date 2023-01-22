@@ -1,44 +1,27 @@
 # Agro Digital
+
+![](https://img.freepik.com/free-photo/close-up-man-selling-crops-from-his-garden_329181-16537.jpg?w=740&t=st=1674351786~exp=1674352386~hmac=33159155ca7259d8d67a7882b3eadc2adde37eb5969009a99afa223b02822c65)
+
 Aplicativo e-commerce voltado para agricultura familiar
 Modelo C to C
 
 ## Funcionalidades
 - Autentficação com Google (Login/Logout)
-- Chat
+- Usuário, Produto e Venda:
+    - Cadastrar
+    - Mostrar
+    - Atualizar
+    - Deletar
+- Chat:
+    - Enviar mensagem
+    - Mostrar mensagem
+    - Deletar mensagem
 
 
-## Deploy
+## Desenvolvimento e Deploy
 
-#### server
-```
-npm typeorm migration:run
-npm run dev
-```
-#### web
-```
-npm start
-```
-#### mobile
-```
-npx expo start
-```
+[Server](https://github.com/LBarros77/agrodigital/tree/main/server#readme "Server")
 
-## Development
-Clone the directory and install dependencies:
-```
-git clone ...
-npm install
-```
-
-Para rodar a aplicação você deve ter o banco de dados rodando.
-```
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
-```
-
-Crie server/.env baseado no server/.env.example e edite DATABASE_URL.
-```
-service postgresql start
-```
 
 ## Tech stack
 - React, React Native, Expo, Next, Axios e React-dom
