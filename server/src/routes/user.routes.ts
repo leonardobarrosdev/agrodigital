@@ -10,13 +10,13 @@ const userController = new UserController(userRepository);
 
 
 userRouters.get('/', async (req, res) => {
-	const users = await userRepository.getUsers();
+	const users = await userRepository.getAll();
 
 	return res.json(users);
 });
 
 userRouters.get('/:id', async (req, res) => {
-	const user = await userRepository.findById(
+	const user = await userRepository.getById(
 		req.params.id
 	);
 
@@ -24,7 +24,7 @@ userRouters.get('/:id', async (req, res) => {
 });
 
 userRouters.get('/:email', async (req, res) => {
-	const user = await userRepository.findByEmail(
+	const user = await userRepository.getByEmail(
 		req.params.email
 	);
 

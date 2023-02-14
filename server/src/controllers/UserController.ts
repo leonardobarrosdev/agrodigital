@@ -14,7 +14,7 @@ class UserController {
 	constructor(private userRepository: UserRepository) {}
 
 	async create(user: IRequest): Promise<User> {
-		const userExist = await this.userRepository.findByEmail(user.email);
+		const userExist = await this.userRepository.getByEmail(user.email);
 
 		if(userExist) {
 			throw new ForbidenError('Usuário já existe.');
@@ -27,7 +27,7 @@ class UserController {
 	}
 
 	async update(id: string, user?: IRequest): Promise<User> {
-		if(!await this.userRepository.findById(id)) {
+		if(!await this.userRepository.getById(id)) {
 			throw new ForbidenError('User not exist.');
 		}
 

@@ -31,7 +31,7 @@ export default class ProductController {
 	}
 
 	async getById(id: string): Promise<Product> {
-		const product = await this.productRepository.findById(id);
+		const product = await this.productRepository.getById(id);
 
 		if(!product) {
 			throw new NotFoundError('Produto não encontrado.');
@@ -41,7 +41,7 @@ export default class ProductController {
 	}
 
 	async getByName(name: string): Promise<Product[]> {
-		const products = await this.productRepository.findByName(name);
+		const products = await this.productRepository.getByName(name);
 
 		if(!products) {
 			throw new NotFoundError('Produto não encontrado.');
@@ -57,7 +57,7 @@ export default class ProductController {
 	}
 	
 	async update(code: string, product: IProduct): Promise<Product> {
-		if(!await this.productRepository.findById(code)) {
+		if(!await this.productRepository.getById(code)) {
 			throw new NotFoundError('Produto não existe.');
 		}
 

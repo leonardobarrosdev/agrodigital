@@ -4,8 +4,8 @@ import { AppDataSource } from './data-source';
 AppDataSource.initialize().then(async () => {
     const user = new User()
     
-    user.firstName = "Leonardo"
-    user.lastName = "Barros"
+    user.firstName = "demo"
+    user.lastName = "demo"
     user.email = "demo@company.com"
     user.password = 'password'
     

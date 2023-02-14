@@ -27,16 +27,15 @@ export default class ProductRepository {
 		return product;
 	}
 
-	async findById(id: string): Promise<Product> {
+	async getById(id: string): Promise<Product> {
 		const product = await this.manager.findOneBy(Product, {
 			code: id
 		});
-		console.log(product);
 
 		return product;
 	}
 
-	async findByName(name: string): Promise<Product[]> {
+	async getByName(name: string): Promise<Product[]> {
 		const product = await this.manager.find(Product, {
 			where: {
 				name: name,
@@ -59,7 +58,7 @@ export default class ProductRepository {
 	}
 
 	async update(id: string, product: IProduct): Promise<Product> {
-		const prod = await this.findById(id);
+		const prod = await this.getById(id);
 
 		for(let key in product) {
 			if(prod[`${key}`] !== product[`${key}`]) {
@@ -75,14 +74,14 @@ export default class ProductRepository {
 	}
 
 	async delete(id: string): Promise<boolean> {
-		const product = await this.findById(id);
+		const product = await this.getById(id);
 		
 		if(product === null) return false;
 
 		await this.manager.remove(product);
 
-		// result = (await this.findById(id))? true : false;
+		const result = await !this.getById(id)? true : false;
 
-		return true;
+		return result;
 	}
 }

@@ -15,13 +15,13 @@ export default class UserRepository {
 
 	constructor() {}
 
-	async getUsers(): Promise<User[]> {
+	async getAll(): Promise<User[]> {
 		const users = await this.manager.find(User);
 		
 		return users;
 	}
 
-	async findByEmail(email: string): Promise<User> {
+	async getByEmail(email: string): Promise<User> {
 		const user = await this.manager.findOne(User, {
 			where: { email }
 		});
@@ -29,7 +29,7 @@ export default class UserRepository {
 		return user;
 	}
 
-	async findById(id: string): Promise<User> {
+	async getById(id: string): Promise<User> {
 		const user = await this.manager.findOneBy(User, {
 			id: id
 		});
@@ -50,7 +50,7 @@ export default class UserRepository {
 	}
 
 	async update(id: string, user?: IUser): Promise<User> {
-		const usr = await this.findById(id);
+		const usr = await this.getById(id);
 
 		for(let key in user) {
 			if(usr[`${key}`] !== user[`${key}`]) {
@@ -60,20 +60,19 @@ export default class UserRepository {
 
 		usr.updated_at = new Date();
 
-		this.manager.save(usr);
+		await this.manager.save(usr);
 
 		return usr;
 	}
 
 	async delete(id: string): Promise<boolean> {
-		const user = await this.findById(id);
-		let result = !user;
+		const user = await this.getById(id);
 
-		if(result) return false;
+		if(!user) return false;
 
-		this.manager.remove(User);
+		await this.manager.remove(user);
 
-		result = (await this.findById(id))? true : false;
+		const result = !(await this.getById(id));
 
 		return result;
 	}
