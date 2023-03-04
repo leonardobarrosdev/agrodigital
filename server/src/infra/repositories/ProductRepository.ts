@@ -1,5 +1,4 @@
-import { Product } from '../models/Product'
-import AppDataSource from '../database'
+import IProductRepository from '../../domain/repositories/IProductRepository';
 
 interface IProduct {
 	code?: string;
@@ -16,7 +15,7 @@ interface IProduct {
 	chats?: string[];
 }
 
-export default class ProductRepository {
+export default class ProductRepository implements IProductRepository {
 	private manager = AppDataSource.manager;
 
 	constructor() {}
